@@ -1,7 +1,31 @@
 function getAPIBaseURL() {
-  if (typeof window !== 'undefined' && window.location && window.location.hostname && window.location.hostname !== '') {
-    return `http://${window.location.hostname}:8000/api`;
+  // 1. Explicit environment/window override
+  if (typeof window !== 'undefined' && window.PAYNOVA_API_URL) {
+    return window.PAYNOVA_API_URL;
   }
+
+  // 2. Browser context detection
+  if (typeof window !== 'undefined' && window.location) {
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+    const origin = window.location.origin;
+
+    // Local development (localhost, 127.0.0.1, or local dev port)
+    if (port === '3000' || port === '5173' || hostname === 'localhost' || hostname === '127.0.0.1') {
+      return `http://${hostname || 'localhost'}:8000/api`;
+    }
+
+    // Local LAN testing on port 3000 (e.g. 192.168.x.x:3000)
+    if (port === '3000') {
+      return `http://${hostname}:8000/api`;
+    }
+
+    // Cloud / Vercel deployment (same origin serverless route /api)
+    if (origin && origin.startsWith('http')) {
+      return `${origin}/api`;
+    }
+  }
+
   return 'http://localhost:8000/api';
 }
 
