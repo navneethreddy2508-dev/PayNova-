@@ -384,7 +384,11 @@ class AppStateStore {
         evidence: response.evidence || []
       };
 
-      // Add to store at top
+      // Add to store at top (deduplicating if re-simulated)
+      const existingIdx = this.orders.findIndex(o => o.id === newOrder.id);
+      if (existingIdx >= 0) {
+        this.orders.splice(existingIdx, 1);
+      }
       this.orders.unshift(newOrder);
       this.activeOrderId = newOrder.id;
 

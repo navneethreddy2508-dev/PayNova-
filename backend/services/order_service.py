@@ -270,30 +270,54 @@ def create_order(db: Session, order_in: OrderCreate, auto_predict: bool = True) 
             db.commit()
             db.refresh(product)
 
-    new_order = Order(
-        order_id=order_id,
-        order_code=order_code,
-        customer_id=order_in.customer_id,
-        product_id=product_id,
-        category=order_in.category,
-        order_value=order_in.order_value,
-        currency=order_in.currency,
-        order_date=order_in.order_date or datetime.now(timezone.utc).strftime("%Y-%m-%d"),
-        formatted_date=datetime.now(timezone.utc).strftime("%d %b %Y, %I:%M %p"),
-        payment_method=order_in.payment_method,
-        delivery_type=order_in.delivery_type,
-        delivery_status=order_in.delivery_status,
-        delivery_date=order_in.delivery_date or "Expected 3 Days",
-        shipping_city=order_in.shipping_city,
-        delivery_delay_days=order_in.delivery_delay_days,
-        number_of_items=order_in.number_of_items,
-        is_multi_size_order=order_in.is_multi_size_order,
-        discount_percent=order_in.discount_percent,
-        created_at=datetime.now(timezone.utc)
-    )
-    db.add(new_order)
-    db.commit()
-    db.refresh(new_order)
+    # 3. Create or update Order
+    existing_order = db.query(Order).filter(
+        or_(Order.order_id == order_id, Order.order_code == order_code)
+    ).first()
+    
+    if existing_order:
+        existing_order.customer_id = order_in.customer_id
+        existing_order.product_id = product_id
+        existing_order.category = order_in.category
+        existing_order.order_value = order_in.order_value
+        existing_order.currency = order_in.currency
+        existing_order.formatted_date = datetime.now(timezone.utc).strftime("%d %b %Y, %I:%M %p")
+        existing_order.payment_method = order_in.payment_method
+        existing_order.delivery_type = order_in.delivery_type
+        existing_order.delivery_status = order_in.delivery_status
+        existing_order.shipping_city = order_in.shipping_city
+        existing_order.delivery_delay_days = order_in.delivery_delay_days
+        existing_order.number_of_items = order_in.number_of_items
+        existing_order.is_multi_size_order = order_in.is_multi_size_order
+        existing_order.discount_percent = order_in.discount_percent
+        new_order = existing_order
+        db.commit()
+        db.refresh(new_order)
+    else:
+        new_order = Order(
+            order_id=order_id,
+            order_code=order_code,
+            customer_id=order_in.customer_id,
+            product_id=product_id,
+            category=order_in.category,
+            order_value=order_in.order_value,
+            currency=order_in.currency,
+            order_date=order_in.order_date or datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+            formatted_date=datetime.now(timezone.utc).strftime("%d %b %Y, %I:%M %p"),
+            payment_method=order_in.payment_method,
+            delivery_type=order_in.delivery_type,
+            delivery_status=order_in.delivery_status,
+            delivery_date=order_in.delivery_date or "Expected 3 Days",
+            shipping_city=order_in.shipping_city,
+            delivery_delay_days=order_in.delivery_delay_days,
+            number_of_items=order_in.number_of_items,
+            is_multi_size_order=order_in.is_multi_size_order,
+            discount_percent=order_in.discount_percent,
+            created_at=datetime.now(timezone.utc)
+        )
+        db.add(new_order)
+        db.commit()
+        db.refresh(new_order)
 
     if auto_predict:
         predict_return_risk_for_order(
