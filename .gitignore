@@ -1,0 +1,25 @@
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+
+# Python Caches & Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs & Temporary Files
+*.log
+scratch/
+.system_generated/
+
+# OS Specific
+.DS_Store
+Thumbs.db
