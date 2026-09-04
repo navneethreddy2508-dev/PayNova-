@@ -37,7 +37,10 @@ def get_ml_predictor() -> ReturnRiskPredictor:
     if _predictor_instance is None:
         model_file = os.path.join(PROJECT_ROOT, "ml", "models", "best_model.joblib")
         meta_file = os.path.join(PROJECT_ROOT, "ml", "models", "model_metadata.json")
-        _predictor_instance = ReturnRiskPredictor(model_path=model_file, metadata_path=meta_file)
+        _predictor_instance = ReturnRiskPredictor(
+            model_path=model_file if os.path.exists(model_file) else None,
+            metadata_path=meta_file if os.path.exists(meta_file) else None
+        )
     return _predictor_instance
 
 def get_current_thresholds(db: Session) -> Dict[str, float]:
