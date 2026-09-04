@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Order Details - AI Return-Risk Scorer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error": "#ffffff",
+                        "on-tertiary-container": "#ffede6",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "surface-container-highest": "#e1e2ed",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "primary-fixed": "#dbe1ff",
+                        "on-surface-variant": "#434655",
+                        "on-error-container": "#93000a",
+                        "inverse-on-surface": "#f0f0fb",
+                        "surface": "#faf8ff",
+                        "tertiary-container": "#bc4800",
+                        "on-primary-container": "#eeefff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#e7e7f3",
+                        "secondary-fixed": "#d3e4fe",
+                        "inverse-primary": "#b4c5ff",
+                        "surface-container": "#ededf9",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "on-tertiary-fixed": "#360f00",
+                        "surface-container-low": "#f3f3fe",
+                        "error": "#ba1a1a",
+                        "outline": "#737686",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "surface-variant": "#e1e2ed",
+                        "on-surface": "#191b23",
+                        "tertiary-fixed": "#ffdbcd",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "inverse-surface": "#2e3039",
+                        "on-primary-fixed": "#00174b",
+                        "outline-variant": "#c3c6d7",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "surface-bright": "#faf8ff",
+                        "on-secondary-container": "#54647a",
+                        "surface-tint": "#0053db",
+                        "primary": "#004ac6",
+                        "on-secondary-fixed": "#0b1c30",
+                        "primary-container": "#2563eb",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "on-background": "#191b23",
+                        "tertiary": "#943700",
+                        "surface-dim": "#d9d9e5",
+                        "background": "#faf8ff",
+                        "secondary-container": "#d0e1fb",
+                        "secondary": "#505f76"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1440px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "margin-mobile": "16px",
+                        "sm": "8px",
+                        "xl": "32px",
+                        "base": "4px",
+                        "gutter": "24px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "mono-data": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "mono-data": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
+                        "display-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-md text-body-md min-h-screen flex flex-col">
+<!-- Contextual Page Header (Suppressing Global Nav per rules for task-focused pages) -->
+<header class="sticky top-0 w-full bg-surface border-b border-outline-variant z-40 px-md py-sm md:px-gutter">
+<div class="max-w-container-max mx-auto flex items-center justify-between">
+<div class="flex items-center gap-4">
+<button aria-label="Go back" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Order Details</span>
+<h1 class="font-headline-sm text-headline-sm text-on-surface font-bold">Order #8921</h1>
+</div>
+</div>
+<div class="flex items-center gap-sm">
+<button class="hidden md:flex items-center gap-2 px-4 py-2 rounded-lg font-label-md text-label-md text-on-surface hover:bg-surface-container-low transition-colors border border-outline-variant">
+<span class="material-symbols-outlined" style="font-size: 18px;">download</span>
+                    Export PDF
+                </button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary font-label-md text-label-md text-on-primary hover:bg-primary-container hover:text-on-primary-container transition-colors shadow-sm">
+                    Flag for Review
+                </button>
+</div>
+</div>
+</header>
+<main class="flex-1 w-full max-w-container-max mx-auto px-margin-mobile md:px-gutter py-lg md:py-xl flex flex-col gap-lg md:gap-xl">
+<!-- Hero Section: Risk Indicator -->
+<section class="bg-surface-container-lowest border-l-[4px] border-l-error border-y border-r border-outline-variant rounded-r-xl rounded-l-sm p-lg md:p-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-lg">
+<div class="flex flex-col gap-2 max-w-2xl">
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 px-3 py-1 rounded-full bg-error-container border border-error/20">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span class="font-label-md text-label-md text-on-error-container uppercase">High Risk</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined" style="font-size: 16px;">auto_awesome</span>
+                        AI Prediction Model v2.4
+                    </span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Elevated Return Probability Detected</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-2">
+                    Based on historical customer patterns and category return rates, this order exhibits strong signals correlating with an imminent return. Immediate intervention or policy enforcement recommended.
+                </p>
+</div>
+<div class="flex flex-col items-end shrink-0">
+<div class="flex items-baseline gap-1">
+<span class="font-display-lg text-display-lg text-error">88</span>
+<span class="font-headline-sm text-headline-sm text-error">%</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Return Probability</span>
+</div>
+</section>
+<!-- Bento Grid Data Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-lg md:gap-gutter">
+<!-- Section 1: Order Info -->
+<section class="col-span-1 md:col-span-4 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col h-full">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-6 flex items-center gap-2 border-b border-outline-variant pb-3">
+<span class="material-symbols-outlined text-on-surface-variant">receipt_long</span>
+                    Order Information
+                </h3>
+<div class="flex flex-col gap-4 flex-1">
+<div class="flex justify-between items-center py-2 border-b border-surface-variant">
+<span class="font-label-md text-label-md text-on-surface-variant">ORDER ID</span>
+<span class="font-mono-data text-mono-data text-on-surface">#8921</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-surface-variant">
+<span class="font-label-md text-label-md text-on-surface-variant">CUSTOMER</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Sarah Jenkins</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-surface-variant">
+<span class="font-label-md text-label-md text-on-surface-variant">CATEGORY</span>
+<span class="font-body-md text-body-md text-on-surface">Electronics</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-surface-variant">
+<span class="font-label-md text-label-md text-on-surface-variant">VALUE</span>
+<span class="font-mono-data text-mono-data text-on-surface font-semibold">$1,249.00</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-surface-variant">
+<span class="font-label-md text-label-md text-on-surface-variant">DATE</span>
+<span class="font-mono-data text-mono-data text-on-surface">Oct 24, 2023</span>
+</div>
+<div class="flex justify-between items-center py-2">
+<span class="font-label-md text-label-md text-on-surface-variant">STATUS</span>
+<span class="px-2 py-1 bg-surface-container-high rounded text-on-surface font-label-md text-label-md">Delivered</span>
+</div>
+</div>
+</section>
+<!-- Section 2: Customer History -->
+<section class="col-span-1 md:col-span-4 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col h-full">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-6 flex items-center gap-2 border-b border-outline-variant pb-3">
+<span class="material-symbols-outlined text-on-surface-variant">person_search</span>
+                    Customer History
+                </h3>
+<div class="grid grid-cols-2 gap-4 mb-6">
+<div class="bg-surface p-sm rounded-lg border border-outline-variant flex flex-col gap-1">
+<span class="font-label-md text-label-md text-on-surface-variant">PREV ORDERS</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">12</span>
+</div>
+<div class="bg-surface p-sm rounded-lg border border-outline-variant flex flex-col gap-1">
+<span class="font-label-md text-label-md text-on-surface-variant">PREV RETURNS</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">5</span>
+</div>
+</div>
+<div class="bg-error-container/50 border border-error-container rounded-lg p-md mt-auto flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase">Customer Return Rate</span>
+<span class="font-headline-sm text-headline-sm text-error">41.6%</span>
+</div>
+<div class="w-full bg-surface-variant h-2 rounded-full overflow-hidden">
+<div class="bg-error h-full rounded-full" style="width: 41.6%"></div>
+</div>
+<p class="font-label-md text-label-md text-on-error-container mt-1">
+                        Significantly higher than store average (12.4%)
+                    </p>
+</div>
+</section>
+<!-- Section 3: Product History -->
+<section class="col-span-1 md:col-span-4 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col h-full">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-6 flex items-center gap-2 border-b border-outline-variant pb-3">
+<span class="material-symbols-outlined text-on-surface-variant">inventory_2</span>
+                    Product Analytics
+                </h3>
+<div class="flex gap-4 mb-6 items-center">
+<div class="w-16 h-16 bg-cover bg-center rounded-lg border border-outline-variant shrink-0" data-alt="A sleek, high-end consumer electronic device, possibly a premium laptop or tablet, resting on a clean, minimalist slate-grey surface. Studio lighting creates soft highlights and deep shadows, emphasizing the product's modern metallic finish. The overall aesthetic is professional, sharp, and aligned with a modern tech e-commerce catalog." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDma3OZRubaAdUMR4n2klrGmEgzEc3nPS4NscvOvvaeaZUjkg47JUuwQZPjgX-16WLrGdrrMEwvI-CUGxugssvz-tn-_5HXp3x7gUajRdA63Ih0DeJMlk9tZfPManQu-MY8RniM9Ai8jEOtVt5R7FX9cxEhUrGaJ6mxgBfC7GyXAl3BQ5kTTwHGeq169anFKgWyZfj1YpCT5k1ijN0EraWm_8knXv0flUKVeX196uFF6X54wGCu1lRdEw')"></div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface font-medium line-clamp-2">Premium Noise-Cancelling Headphones Pro Max</span>
+<span class="font-label-md text-label-md text-on-surface-variant mt-1">SKU: EL-AUDIO-992</span>
+</div>
+</div>
+<div class="flex flex-col gap-4 flex-1">
+<div class="flex justify-between items-center py-2 border-b border-surface-variant">
+<span class="font-label-md text-label-md text-on-surface-variant">CATEGORY</span>
+<span class="font-body-md text-body-md text-on-surface">Electronics</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-surface-variant">
+<span class="font-label-md text-label-md text-on-surface-variant">CAT. RETURN RATE</span>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary-container"></span>
+<span class="font-mono-data text-mono-data text-on-surface">15.0%</span>
+</div>
+</div>
+<div class="flex justify-between items-center py-2">
+<span class="font-label-md text-label-md text-on-surface-variant">PRODUCT RATING</span>
+<div class="flex items-center gap-1 text-on-surface">
+<span class="font-mono-data text-mono-data font-semibold">4.2</span>
+<span class="material-symbols-outlined text-tertiary-container" style="font-size: 16px; font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,145 @@
+{
+  "model_name": "ReturnGuard-Ensemble",
+  "model_version": "order-return-risk-model-v1.0",
+  "champion_algorithm": "Random Forest Classifier",
+  "dataset_version": "synthetic-ecommerce-orders-v1.0",
+  "total_records": 15000,
+  "train_records": 12000,
+  "test_records": 3000,
+  "features_used": [
+    "order_value",
+    "delivery_delay_days",
+    "number_of_items",
+    "customer_order_count",
+    "customer_previous_return_count",
+    "customer_previous_cancel_count",
+    "customer_historical_return_rate",
+    "customer_avg_order_value",
+    "order_value_deviation",
+    "product_historical_return_rate",
+    "category_historical_return_rate",
+    "discount_percent",
+    "product_category",
+    "payment_method",
+    "delivery_type",
+    "is_multi_size_order",
+    "is_first_time_customer"
+  ],
+  "engineered_feature_count": 28,
+  "champion_metrics": {
+    "model_name": "Random Forest Classifier",
+    "accuracy": 0.812,
+    "precision": 0.3714,
+    "recall": 0.5278,
+    "f1_score": 0.436,
+    "roc_auc": 0.7541,
+    "false_positive_rate": 0.1426,
+    "confusion_matrix": {
+      "true_positive": 218,
+      "false_positive": 369,
+      "false_negative": 195,
+      "true_negative": 2218
+    },
+    "est_fp_cost_inr": 18450,
+    "caught_revenue_inr": 668330.0,
+    "missed_revenue_inr": 640519.0
+  },
+  "all_model_comparison": {
+    "Logistic Regression (Baseline)": {
+      "model_name": "Logistic Regression (Baseline)",
+      "accuracy": 0.7733,
+      "precision": 0.3295,
+      "recall": 0.6247,
+      "f1_score": 0.4314,
+      "roc_auc": 0.7709,
+      "false_positive_rate": 0.2029,
+      "confusion_matrix": {
+        "true_positive": 258,
+        "false_positive": 525,
+        "false_negative": 155,
+        "true_negative": 2062
+      },
+      "est_fp_cost_inr": 26250,
+      "caught_revenue_inr": 828879.0,
+      "missed_revenue_inr": 479970.0
+    },
+    "Random Forest Classifier": {
+      "model_name": "Random Forest Classifier",
+      "accuracy": 0.812,
+      "precision": 0.3714,
+      "recall": 0.5278,
+      "f1_score": 0.436,
+      "roc_auc": 0.7541,
+      "false_positive_rate": 0.1426,
+      "confusion_matrix": {
+        "true_positive": 218,
+        "false_positive": 369,
+        "false_negative": 195,
+        "true_negative": 2218
+      },
+      "est_fp_cost_inr": 18450,
+      "caught_revenue_inr": 668330.0,
+      "missed_revenue_inr": 640519.0
+    },
+    "HistGradientBoosting Classifier": {
+      "model_name": "HistGradientBoosting Classifier",
+      "accuracy": 0.783,
+      "precision": 0.3374,
+      "recall": 0.5981,
+      "f1_score": 0.4314,
+      "roc_auc": 0.7461,
+      "false_positive_rate": 0.1875,
+      "confusion_matrix": {
+        "true_positive": 247,
+        "false_positive": 485,
+        "false_negative": 166,
+        "true_negative": 2102
+      },
+      "est_fp_cost_inr": 24250,
+      "caught_revenue_inr": 806339.0,
+      "missed_revenue_inr": 502510.0
+    }
+  },
+  "top_feature_importances": [
+    {
+      "feature": "customer_historical_return_rate",
+      "importance": 0.1905
+    },
+    {
+      "feature": "product_historical_return_rate",
+      "importance": 0.0997
+    },
+    {
+      "feature": "order_value_deviation",
+      "importance": 0.0984
+    },
+    {
+      "feature": "order_value",
+      "importance": 0.0951
+    },
+    {
+      "feature": "customer_avg_order_value",
+      "importance": 0.0943
+    },
+    {
+      "feature": "is_multi_size_order",
+      "importance": 0.0933
+    },
+    {
+      "feature": "customer_previous_return_count",
+      "importance": 0.0561
+    },
+    {
+      "feature": "discount_percent",
+      "importance": 0.0396
+    },
+    {
+      "feature": "number_of_items",
+      "importance": 0.036
+    },
+    {
+      "feature": "customer_order_count",
+      "importance": 0.0265
+    }
+  ]
+}

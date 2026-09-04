@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Audit Trail for AI Predictions</title>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config from Guidelines -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error": "#ffffff",
+                    "on-tertiary-container": "#ffede6",
+                    "on-secondary": "#ffffff",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "surface-container-highest": "#e1e2ed",
+                    "on-secondary-fixed-variant": "#38485d",
+                    "primary-fixed": "#dbe1ff",
+                    "on-surface-variant": "#434655",
+                    "on-error-container": "#93000a",
+                    "inverse-on-surface": "#f0f0fb",
+                    "surface": "#faf8ff",
+                    "tertiary-container": "#bc4800",
+                    "on-primary-container": "#eeefff",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-high": "#e7e7f3",
+                    "secondary-fixed": "#d3e4fe",
+                    "inverse-primary": "#b4c5ff",
+                    "surface-container": "#ededf9",
+                    "tertiary-fixed-dim": "#ffb596",
+                    "on-tertiary-fixed": "#360f00",
+                    "surface-container-low": "#f3f3fe",
+                    "error": "#ba1a1a",
+                    "outline": "#737686",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "surface-variant": "#e1e2ed",
+                    "on-surface": "#191b23",
+                    "tertiary-fixed": "#ffdbcd",
+                    "on-tertiary-fixed-variant": "#7d2d00",
+                    "inverse-surface": "#2e3039",
+                    "on-primary-fixed": "#00174b",
+                    "outline-variant": "#c3c6d7",
+                    "on-primary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "surface-bright": "#faf8ff",
+                    "on-secondary-container": "#54647a",
+                    "surface-tint": "#0053db",
+                    "primary": "#004ac6",
+                    "on-secondary-fixed": "#0b1c30",
+                    "primary-container": "#2563eb",
+                    "on-tertiary": "#ffffff",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "on-background": "#191b23",
+                    "tertiary": "#943700",
+                    "surface-dim": "#d9d9e5",
+                    "background": "#faf8ff",
+                    "secondary-container": "#d0e1fb",
+                    "secondary": "#505f76"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-max": "1440px",
+                    "md": "16px",
+                    "lg": "24px",
+                    "margin-mobile": "16px",
+                    "sm": "8px",
+                    "xl": "32px",
+                    "base": "4px",
+                    "gutter": "24px",
+                    "xs": "4px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "mono-data": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-md": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "mono-data": ["13px", {"lineHeight": "18px", "fontWeight": "500"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md antialiased min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="bg-surface w-full top-0 sticky border-b border-outline-variant z-40">
+<div class="flex items-center justify-between px-md md:px-gutter py-sm md:py-md max-w-container-max mx-auto h-16">
+<!-- Brand -->
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary text-[28px] fill">shield_lock</span>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary tracking-tight">AI Return-Risk Scorer</h1>
+</div>
+<!-- Desktop Navigation Cluster (Hidden on mobile) -->
+<nav class="hidden md:flex items-center gap-lg">
+<a class="font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 px-3 py-2 rounded-lg flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[18px]">dashboard</span>
+                    Dashboard
+                </a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 px-3 py-2 rounded-lg flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+                    Orders
+                </a>
+<a class="font-label-md text-label-md text-primary bg-surface-container-low px-3 py-2 rounded-lg flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[18px] fill">analytics</span>
+                    Analysis
+                </a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 px-3 py-2 rounded-lg flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[18px]">settings</span>
+                    Settings
+                </a>
+</nav>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-md">
+<button class="text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors duration-200 flex items-center justify-center">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-variant border border-outline-variant overflow-hidden flex-shrink-0 cursor-pointer">
+<img alt="User profile photo" class="w-full h-full object-cover" data-alt="Professional corporate headshot of a financial risk analyst, softly lit, isolated on a neutral gray background. The subject is wearing modern business attire, looking confident and approachable. High resolution, clear studio lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_mQNX44mVeEmKVBDqrK4NWvDzVjagcphAOjahZ44JdJ_dpZ_Su3SmEdnjvursWJamKb6S28ZO8boC5yedXKNoe_db5xf9mfPFDE7csLu3iW6snyI6czyHt5rMlwfuq7K-BKx7Le0dzVyFU3aBUyYMBFKHdrzY6MDGs4JU_v-crXGSo2hz5QZCUu1U0thfRIQIEQXaJD4wLWivuTfp6EqApE_xV9S7fFpgCbeePE36dloNfDJ1s5TFxQ"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow w-full max-w-container-max mx-auto px-margin-mobile md:px-gutter py-lg md:py-xl pb-24 md:pb-xl">
+<!-- Page Header -->
+<div class="mb-lg flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<a class="text-on-surface-variant hover:text-primary transition-colors flex items-center text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-[16px]">arrow_back</span>
+                        Back to Orders
+                    </a>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Audit Trail: Order #892-A</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Complete system traceability and AI prediction lifecycle.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="px-4 py-2 border border-outline-variant text-on-surface-variant font-label-md text-label-md rounded-DEFAULT hover:bg-surface-container-low transition-colors flex items-center gap-2 bg-surface">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                    Export Log
+                </button>
+<button class="px-4 py-2 bg-primary text-on-primary font-label-md text-label-md rounded-DEFAULT hover:bg-primary-container transition-colors shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">flag</span>
+                    Flag for Review
+                </button>
+</div>
+</div>
+<!-- Bento Grid: Meta Information -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter mb-lg">
+<!-- Explainability Summary Card -->
+<div class="md:col-span-8 bg-surface border border-outline-variant rounded-lg p-lg relative overflow-hidden">
+<div class="absolute top-0 left-0 bottom-0 w-1 bg-surface-variant"></div>
+<div class="flex items-start justify-between">
+<div>
+<h3 class="font-label-md text-label-md text-on-surface-variant mb-2">FINAL PREDICTION</h3>
+<div class="flex items-baseline gap-3 mb-1">
+<span class="font-display-lg text-display-lg text-on-surface">88%</span>
+<span class="text-error font-body-md text-body-md flex items-center gap-1 bg-error-container px-2 py-0.5 rounded-full">
+<span class="w-2 h-2 rounded-full bg-error inline-block"></span>
+                                High Risk
+                            </span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xl mt-4">
+                            Model <span class="font-mono-data text-mono-data bg-surface-container px-1 py-0.5 rounded text-on-surface">v2.4-XGB</span> assigned a high risk probability due to anomalous velocity patterns in cross-border transactional flow and secondary identity mismatch flags.
+                        </p>
+</div>
+<div class="hidden sm:block">
+<span class="material-symbols-outlined text-outline-variant text-[48px] opacity-50">memory</span>
+</div>
+</div>
+</div>
+<!-- Execution Meta Card -->
+<div class="md:col-span-4 bg-surface border border-outline-variant rounded-lg p-lg flex flex-col justify-between">
+<h3 class="font-label-md text-label-md text-on-surface-variant mb-4">EXECUTION CONTEXT</h3>
+<div class="space-y-4">
+<div class="flex justify-between items-center border-b border-surface-container-high pb-2">
+<span class="font-body-md text-body-md text-on-surface-variant">Model Version</span>
+<span class="font-mono-data text-mono-data text-on-surface">v2.4.19</span>
+</div>
+<div class="flex justify-between items-center border-b border-surface-container-high pb-2">
+<span class="font-body-md text-body-md text-on-surface-variant">Execution Time</span>
+<span class="font-mono-data text-mono-data text-on-surface">142ms</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface-variant">Data Sources</span>
+<span class="font-mono-data text-mono-data text-on-surface">3 Verified</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Vertical Timeline / Audit Table -->
+<div class="bg-surface border border-outline-variant rounded-lg overflow-hidden">
+<div class="bg-surface-container-lowest px-lg py-4 border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Event Traceability Log</h3>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">filter_list</span>
+<span class="font-label-md text-label-md text-on-surface-variant">Filter Events</span>
+</div>
+</div>
+<div class="p-lg">
+<div class="relative">
+<!-- Vertical Line -->
+<div class="absolute left-[27px] top-4 bottom-4 w-[2px] bg-surface-container-high z-0 hidden md:block"></div>
+<!-- Timeline Item 1 -->
+<div class="relative z-10 flex flex-col md:flex-row gap-4 md:gap-lg mb-8 group">
+<div class="md:w-48 flex-shrink-0 flex items-start gap-4">
+<div class="w-14 h-14 rounded-full bg-surface-container-highest border-4 border-surface flex items-center justify-center flex-shrink-0 z-10 shadow-sm hidden md:flex">
+<span class="material-symbols-outlined text-on-surface-variant">person</span>
+</div>
+<div class="pt-2">
+<div class="font-mono-data text-mono-data text-on-surface-variant">14:45:12 UTC</div>
+<div class="font-label-md text-label-md text-on-surface-variant mt-1">Oct 24, 2023</div>
+</div>
+</div>
+<div class="flex-grow bg-surface-container-lowest border border-outline-variant rounded-lg p-4 group-hover:bg-surface-container-low transition-colors duration-200">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-on-surface text-[16px]">Manual Review Override</span>
+<span class="bg-secondary-container text-on-secondary-container font-label-md text-[10px] px-2 py-0.5 rounded">USER ACTION</span>
+</div>
+<div class="font-mono-data text-mono-data text-on-surface-variant mt-2 sm:mt-0">By: Analyst J.Doe (ID: 9942)</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                                Analyst reviewed anomalous flags and manually adjusted risk tolerance threshold based on verified secondary documentation.
+                            </p>
+</div>
+</div>
+<!-- Timeline Item 2 -->
+<div class="relative z-10 flex flex-col md:flex-row gap-4 md:gap-lg mb-8 group">
+<div class="md:w-48 flex-shrink-0 flex items-start gap-4">
+<div class="w-14 h-14 rounded-full bg-primary-container border-4 border-surface flex items-center justify-center flex-shrink-0 z-10 shadow-sm hidden md:flex">
+<span class="material-symbols-outlined text-on-primary-container fill">psychology</span>
+</div>
+<div class="pt-2">
+<div class="font-mono-data text-mono-data text-on-surface-variant">14:32:01 UTC</div>
+<div class="font-label-md text-label-md text-on-surface-variant mt-1">Oct 24, 2023</div>
+</div>
+</div>
+<div class="flex-grow bg-surface-container-lowest border border-outline-variant rounded-lg p-4 group-hover:bg-surface-container-low transition-colors duration-200">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-on-surface text-[16px]">Risk Assigned</span>
+<span class="bg-error-container text-on-error-container font-label-md text-[10px] px-2 py-0.5 rounded flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-error inline-block"></span>
+                                        HIGH RISK
+                                    </span>
+</div>
+<div class="font-mono-data text-mono-data text-on-surface-variant mt-2 sm:mt-0">By: System (v2.4)</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-4 bg-surface rounded p-3 border border-surface-variant">
+<div>
+<div class="font-label-md text-[10px] text-on-surface-variant uppercase tracking-wider mb-1">Probability</div>
+<div class="font-mono-data text-mono-data text-error font-semibold">88.4%</div>
+</div>
+<div>
+<div class="font-label-md text-[10px] text-on-surface-variant uppercase tracking-wider mb-1">Confidence</div>
+<div class="font-mono-data text-mono-data text-on-surface">94.1%</div>
+</div>
+<div class="col-span-2">
+<div class="font-label-md text-[10px] text-on-surface-variant uppercase tracking-wider mb-1">Primary Factor</div>
+<div class="font-mono-data text-mono-data text-on-surface truncate">Velocity Anomaly (Rule: X-44)</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Timeline Item 3 -->
+<div class="relative z-10 flex flex-col md:flex-row gap-4 md:gap-lg mb-8 group">
+<div class="md:w-48 flex-shrink-0 flex items-start gap-4">
+<div class="w-14 h-14 rounded-full bg-surface-container-highest border-4 border-surface flex items-center justify-center flex-shrink-0 z-10 shadow-sm hidden md:flex">
+<span class="material-symbols-outlined text-on-surface-variant">account_tree</span>
+</div>
+<div class="pt-2">
+<div class="font-mono-data text-mono-data text-on-surface-variant">14:31:58 UTC</div>
+<div class="font-label-md text-label-md text-on-surface-variant mt-1">Oct 24, 2023</div>
+</div>
+</div>
+<div class="flex-grow bg-surface-container-lowest border border-outline-variant rounded-lg p-4 group-hover:bg-surface-container-low transition-colors duration-200">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-on-surface text-[16px]">Feature Extraction</span>
+<span class="bg-surface-variant text-on-surface-variant font-label-md text-[10px] px-2 py-0.5 rounded">SYSTEM EVENT</span>
+</div>
+<div class="font-mono-data text-mono-data text-on-surface-variant mt-2 sm:mt-0">By: System (Data Pipeline)</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                                Generated 142 features from raw transactional payload. Vectorized textual metadata successfully.
+                            </p>
+</div>
+</div>
+<!-- Timeline Item 4 -->
+<div class="relative z-10 flex flex-col md:flex-row gap-4 md:gap-lg group">
+<div class="md:w-48 flex-shrink-0 flex items-start gap-4">
+<div class="w-14 h-14 rounded-full bg-surface-container-highest border-4 border-surface flex items-center justify-center flex-shrink-0 z-10 shadow-sm hidden md:flex">
+<span class="material-symbols-outlined text-on-surface-variant">input</span>
+</div>
+<div class="pt-2">
+<div class="font-mono-data text-mono-data text-on-surface-variant">14:31:55 UTC</div>
+<div class="font-label-md text-label-md text-on-surface-variant mt-1">Oct 24, 2023</div>
+</div>
+</div>
+<div class="flex-grow bg-surface-container-lowest border border-outline-variant rounded-lg p-4 group-hover:bg-surface-container-low transition-colors duration-200">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-on-surface text-[16px]">Data Ingestion</span>
+<span class="bg-surface-variant text-on-surface-variant font-label-md text-[10px] px-2 py-0.5 rounded">SYSTEM EVENT</span>
+</div>
+<div class="font-mono-data text-mono-data text-on-surface-variant mt-2 sm:mt-0">By: API Gateway</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                                Order #892-A payload received via primary API endpoint. Schema validated.
+                            </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center bg-surface dark:bg-surface-dim py-2 px-margin-mobile border-t border-outline-variant shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] pb-safe">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-transform duration-150 rounded-xl" href="#">
+<span class="material-symbols-outlined text-[24px]">dashboard</span>
+<span class="font-label-md text-label-md mt-1">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-transform duration-150 rounded-xl" href="#">
+<span class="material-symbols-outlined text-[24px]">receipt_long</span>
+<span class="font-label-md text-label-md mt-1">Orders</span>
+</a>
+<!-- Active Tab -->
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl px-4 py-1 scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined text-[24px] fill">analytics</span>
+<span class="font-label-md text-label-md mt-1">Analysis</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-transform duration-150 rounded-xl" href="#">
+<span class="material-symbols-outlined text-[24px]">settings</span>
+<span class="font-label-md text-label-md mt-1">Settings</span>
+</a>
+</nav>
+<!-- Safe area padding for mobile nav -->
+<style>
+        @supports (padding-bottom: env(safe-area-inset-bottom)) {
+            .pb-safe {
+                padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
+            }
+        }
+    </style>
+</body></html>

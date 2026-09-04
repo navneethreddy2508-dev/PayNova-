@@ -1,0 +1,338 @@
+{
+  "metadata": {
+    "model_name": "ReturnGuard-Ensemble",
+    "model_version": "order-return-risk-model-v1.0",
+    "champion_algorithm": "Random Forest Classifier",
+    "dataset_version": "synthetic-ecommerce-orders-v1.0",
+    "total_records": 15000,
+    "train_records": 12000,
+    "test_records": 3000,
+    "features_used": [
+      "order_value",
+      "delivery_delay_days",
+      "number_of_items",
+      "customer_order_count",
+      "customer_previous_return_count",
+      "customer_previous_cancel_count",
+      "customer_historical_return_rate",
+      "customer_avg_order_value",
+      "order_value_deviation",
+      "product_historical_return_rate",
+      "category_historical_return_rate",
+      "discount_percent",
+      "product_category",
+      "payment_method",
+      "delivery_type",
+      "is_multi_size_order",
+      "is_first_time_customer"
+    ],
+    "engineered_feature_count": 28,
+    "champion_metrics": {
+      "model_name": "Random Forest Classifier",
+      "accuracy": 0.812,
+      "precision": 0.3714,
+      "recall": 0.5278,
+      "f1_score": 0.436,
+      "roc_auc": 0.7541,
+      "false_positive_rate": 0.1426,
+      "confusion_matrix": {
+        "true_positive": 218,
+        "false_positive": 369,
+        "false_negative": 195,
+        "true_negative": 2218
+      },
+      "est_fp_cost_inr": 18450,
+      "caught_revenue_inr": 668330.0,
+      "missed_revenue_inr": 640519.0
+    },
+    "all_model_comparison": {
+      "Logistic Regression (Baseline)": {
+        "model_name": "Logistic Regression (Baseline)",
+        "accuracy": 0.7733,
+        "precision": 0.3295,
+        "recall": 0.6247,
+        "f1_score": 0.4314,
+        "roc_auc": 0.7709,
+        "false_positive_rate": 0.2029,
+        "confusion_matrix": {
+          "true_positive": 258,
+          "false_positive": 525,
+          "false_negative": 155,
+          "true_negative": 2062
+        },
+        "est_fp_cost_inr": 26250,
+        "caught_revenue_inr": 828879.0,
+        "missed_revenue_inr": 479970.0
+      },
+      "Random Forest Classifier": {
+        "model_name": "Random Forest Classifier",
+        "accuracy": 0.812,
+        "precision": 0.3714,
+        "recall": 0.5278,
+        "f1_score": 0.436,
+        "roc_auc": 0.7541,
+        "false_positive_rate": 0.1426,
+        "confusion_matrix": {
+          "true_positive": 218,
+          "false_positive": 369,
+          "false_negative": 195,
+          "true_negative": 2218
+        },
+        "est_fp_cost_inr": 18450,
+        "caught_revenue_inr": 668330.0,
+        "missed_revenue_inr": 640519.0
+      },
+      "HistGradientBoosting Classifier": {
+        "model_name": "HistGradientBoosting Classifier",
+        "accuracy": 0.783,
+        "precision": 0.3374,
+        "recall": 0.5981,
+        "f1_score": 0.4314,
+        "roc_auc": 0.7461,
+        "false_positive_rate": 0.1875,
+        "confusion_matrix": {
+          "true_positive": 247,
+          "false_positive": 485,
+          "false_negative": 166,
+          "true_negative": 2102
+        },
+        "est_fp_cost_inr": 24250,
+        "caught_revenue_inr": 806339.0,
+        "missed_revenue_inr": 502510.0
+      }
+    },
+    "top_feature_importances": [
+      {
+        "feature": "customer_historical_return_rate",
+        "importance": 0.1905
+      },
+      {
+        "feature": "product_historical_return_rate",
+        "importance": 0.0997
+      },
+      {
+        "feature": "order_value_deviation",
+        "importance": 0.0984
+      },
+      {
+        "feature": "order_value",
+        "importance": 0.0951
+      },
+      {
+        "feature": "customer_avg_order_value",
+        "importance": 0.0943
+      },
+      {
+        "feature": "is_multi_size_order",
+        "importance": 0.0933
+      },
+      {
+        "feature": "customer_previous_return_count",
+        "importance": 0.0561
+      },
+      {
+        "feature": "discount_percent",
+        "importance": 0.0396
+      },
+      {
+        "feature": "number_of_items",
+        "importance": 0.036
+      },
+      {
+        "feature": "customer_order_count",
+        "importance": 0.0265
+      }
+    ]
+  },
+  "predictions": {
+    "8921": {
+      "order_id": "8921",
+      "return_probability": 0.3377,
+      "risk_score": 34,
+      "risk_level": "LOW",
+      "order_value_inr": 12490.0,
+      "revenue_at_risk_inr": 4218.2,
+      "top_risk_factors": [
+        {
+          "name": "High customer return history (42.8% vs 20% benchmark)",
+          "impact": "+27%",
+          "weight": 0.27,
+          "type": "customer",
+          "importance_rank": 1
+        },
+        {
+          "name": "Elevated Electronics product return propensity (24.5%)",
+          "impact": "+22%",
+          "weight": 0.22,
+          "type": "product",
+          "importance_rank": 3
+        },
+        {
+          "name": "Order value (\u20b912,490) is 2.8x higher than customer typical average",
+          "impact": "+21%",
+          "weight": 0.21,
+          "type": "value",
+          "importance_rank": 4
+        }
+      ],
+      "model_version": "order-return-risk-model-v1.0"
+    },
+    "8920": {
+      "order_id": "8920",
+      "return_probability": 0.2843,
+      "risk_score": 28,
+      "risk_level": "LOW",
+      "order_value_inr": 18990.0,
+      "revenue_at_risk_inr": 5399.61,
+      "top_risk_factors": [
+        {
+          "name": "Order value (\u20b918,990) is 2.6x higher than customer typical average",
+          "impact": "+19%",
+          "weight": 0.19,
+          "type": "value",
+          "importance_rank": 4
+        }
+      ],
+      "model_version": "order-return-risk-model-v1.0"
+    },
+    "8919": {
+      "order_id": "8919",
+      "return_probability": 0.6554,
+      "risk_score": 66,
+      "risk_level": "MEDIUM",
+      "order_value_inr": 7490.0,
+      "revenue_at_risk_inr": 4909.32,
+      "top_risk_factors": [
+        {
+          "name": "Bracket purchasing detected (Multiple adjacent sizes of same SKU)",
+          "impact": "+45%",
+          "weight": 0.45,
+          "type": "behavior",
+          "importance_rank": 2
+        },
+        {
+          "name": "High customer return history (53.8% vs 20% benchmark)",
+          "impact": "+40%",
+          "weight": 0.4,
+          "type": "customer",
+          "importance_rank": 1
+        },
+        {
+          "name": "Elevated Apparel product return propensity (38.0%)",
+          "impact": "+34%",
+          "weight": 0.34,
+          "type": "product",
+          "importance_rank": 3
+        },
+        {
+          "name": "Cash on Delivery (COD) payment with elevated buyer remorse risk",
+          "impact": "+18%",
+          "weight": 0.18,
+          "type": "payment",
+          "importance_rank": 5
+        }
+      ],
+      "model_version": "order-return-risk-model-v1.0"
+    },
+    "8918": {
+      "order_id": "8918",
+      "return_probability": 0.2052,
+      "risk_score": 21,
+      "risk_level": "LOW",
+      "order_value_inr": 1890.0,
+      "revenue_at_risk_inr": 387.92,
+      "top_risk_factors": [
+        {
+          "name": "High loyalty customer with exceptionally low return rate (3.1%)",
+          "impact": "-32%",
+          "weight": -0.32,
+          "type": "customer",
+          "importance_rank": 1
+        },
+        {
+          "name": "Low-return stable category (Apparel baseline: 6.2%)",
+          "impact": "-18%",
+          "weight": -0.18,
+          "type": "product",
+          "importance_rank": 3
+        }
+      ],
+      "model_version": "order-return-risk-model-v1.0"
+    },
+    "8917": {
+      "order_id": "8917",
+      "return_probability": 0.3289,
+      "risk_score": 33,
+      "risk_level": "LOW",
+      "order_value_inr": 6490.0,
+      "revenue_at_risk_inr": 2134.77,
+      "top_risk_factors": [
+        {
+          "name": "Elevated Footwear product return propensity (32.1%)",
+          "impact": "+28%",
+          "weight": 0.28,
+          "type": "product",
+          "importance_rank": 3
+        },
+        {
+          "name": "High customer return history (40.0% vs 20% benchmark)",
+          "impact": "+24%",
+          "weight": 0.24,
+          "type": "customer",
+          "importance_rank": 1
+        }
+      ],
+      "model_version": "order-return-risk-model-v1.0"
+    },
+    "8916": {
+      "order_id": "8916",
+      "return_probability": 0.1855,
+      "risk_score": 19,
+      "risk_level": "LOW",
+      "order_value_inr": 11990.0,
+      "revenue_at_risk_inr": 2224.43,
+      "top_risk_factors": [
+        {
+          "name": "Low-return stable category (Furniture & Home baseline: 9.5%)",
+          "impact": "-18%",
+          "weight": -0.18,
+          "type": "product",
+          "importance_rank": 3
+        }
+      ],
+      "model_version": "order-return-risk-model-v1.0"
+    },
+    "8915": {
+      "order_id": "8915",
+      "return_probability": 0.4105,
+      "risk_score": 41,
+      "risk_level": "MEDIUM",
+      "order_value_inr": 3490.0,
+      "revenue_at_risk_inr": 1432.73,
+      "top_risk_factors": [
+        {
+          "name": "High customer return history (36.3% vs 20% benchmark)",
+          "impact": "+19%",
+          "weight": 0.19,
+          "type": "customer",
+          "importance_rank": 1
+        },
+        {
+          "name": "Elevated Personal Care product return propensity (21.0%)",
+          "impact": "+18%",
+          "weight": 0.18,
+          "type": "product",
+          "importance_rank": 3
+        },
+        {
+          "name": "Cash on Delivery (COD) payment with elevated buyer remorse risk",
+          "impact": "+18%",
+          "weight": 0.18,
+          "type": "payment",
+          "importance_rank": 5
+        }
+      ],
+      "model_version": "order-return-risk-model-v1.0"
+    }
+  }
+}

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Return-Risk Scorer - Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error": "#ffffff",
+                        "on-tertiary-container": "#ffede6",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "surface-container-highest": "#e1e2ed",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "primary-fixed": "#dbe1ff",
+                        "on-surface-variant": "#434655",
+                        "on-error-container": "#93000a",
+                        "inverse-on-surface": "#f0f0fb",
+                        "surface": "#faf8ff",
+                        "tertiary-container": "#bc4800",
+                        "on-primary-container": "#eeefff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#e7e7f3",
+                        "secondary-fixed": "#d3e4fe",
+                        "inverse-primary": "#b4c5ff",
+                        "surface-container": "#ededf9",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "on-tertiary-fixed": "#360f00",
+                        "surface-container-low": "#f3f3fe",
+                        "error": "#ba1a1a",
+                        "outline": "#737686",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "surface-variant": "#e1e2ed",
+                        "on-surface": "#191b23",
+                        "tertiary-fixed": "#ffdbcd",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "inverse-surface": "#2e3039",
+                        "on-primary-fixed": "#00174b",
+                        "outline-variant": "#c3c6d7",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "surface-bright": "#faf8ff",
+                        "on-secondary-container": "#54647a",
+                        "surface-tint": "#0053db",
+                        "primary": "#004ac6",
+                        "on-secondary-fixed": "#0b1c30",
+                        "primary-container": "#2563eb",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "on-background": "#191b23",
+                        "tertiary": "#943700",
+                        "surface-dim": "#d9d9e5",
+                        "background": "#faf8ff",
+                        "secondary-container": "#d0e1fb",
+                        "secondary": "#505f76"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1440px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "margin-mobile": "16px",
+                        "sm": "8px",
+                        "xl": "32px",
+                        "base": "4px",
+                        "gutter": "24px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "mono-data": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "mono-data": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
+                        "display-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .fill-icon { font-variation-settings: 'FILL' 1; }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #004ac6;
+            cursor: pointer;
+            margin-top: -6px;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #e1e2ed;
+            border-radius: 2px;
+        }
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #004ac6;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #004ac6;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen pb-24 md:pb-0">
+<!-- TopAppBar (Web & Mobile Context) -->
+<header class="w-full top-0 sticky bg-surface border-b border-outline-variant z-40 transition-colors duration-200">
+<div class="flex items-center justify-between px-md py-sm max-w-container-max mx-auto">
+<div class="flex items-center gap-sm">
+<img class="w-8 h-8 rounded-full object-cover" data-alt="A professional corporate headshot of a financial analyst, soft bright lighting, sharp focus, modern office background slightly blurred, high utility aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqC-7F_GginmKzKc3oSFda6b18-9OOHyWHhrI545SlT6obd8L3vxMaD-vgPT8YWp9Ji-z2lEa018k3DZDJ746rmWeUnPXWYEJYa2MJNyqLbsqYOpziKnlHPaTWdvElL4c7nWF-UNvSNWC-WSMhtM0yrfTTbwOagpqf9b8KG6wegA29_g3-EQsov4omom7o4eIpDKm4McpfUJpMdJsITF_2ZSDDU499eM03sq7KBaMdhtNRv1Sqf4TG6A"/>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary">AI Return-Risk Scorer</h1>
+</div>
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-colors duration-200 group">
+<span class="material-symbols-outlined text-primary group-hover:text-primary-container">notifications</span>
+</button>
+</div>
+</header>
+<!-- Main Layout: Sidebar (Web) + Content -->
+<div class="flex max-w-container-max mx-auto w-full h-full">
+<!-- Web Sidebar (Hidden on Mobile) -->
+<aside class="hidden md:flex flex-col w-64 border-r border-outline-variant h-[calc(100vh-64px)] sticky top-16 bg-surface py-lg px-md gap-sm">
+<nav class="flex flex-col gap-xs w-full">
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md text-body-md font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-body-md text-body-md font-medium">Orders</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-body-md text-body-md font-medium">Analysis</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg bg-secondary-container text-on-secondary-container transition-colors duration-150" href="#">
+<span class="material-symbols-outlined fill-icon">settings</span>
+<span class="font-body-md text-body-md font-medium">Settings</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 w-full px-margin-mobile md:px-gutter py-lg md:py-xl overflow-y-auto">
+<div class="max-w-4xl mx-auto space-y-lg">
+<div class="mb-xl">
+<h2 class="font-display-lg text-display-lg text-on-surface mb-sm">Settings</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Configure AI thresholds, model parameters, and system notifications.</p>
+</div>
+<!-- Bento Grid for Settings -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-lg">
+<!-- Section 1: Threshold Config (Spans 8 cols) -->
+<section class="lg:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-sm">
+<div class="flex items-center gap-sm mb-md border-l-4 border-surface-variant pl-sm">
+<span class="material-symbols-outlined text-primary">tune</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Risk Threshold Configuration</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-lg">Adjust the sensitivity boundaries for the AI risk classification engine. Changes apply to next scoring batch.</p>
+<div class="space-y-xl">
+<!-- Slider 1 -->
+<div class="space-y-sm">
+<div class="flex justify-between items-center">
+<label class="font-label-md text-label-md text-on-surface uppercase tracking-wider">Low Risk Ceiling</label>
+<span class="font-mono-data text-mono-data text-primary font-semibold">15%</span>
+</div>
+<input class="w-full appearance-none bg-transparent" max="100" min="0" type="range" value="15"/>
+<div class="flex justify-between font-label-md text-label-md text-on-surface-variant">
+<span>0%</span>
+<span>Conservative</span>
+</div>
+</div>
+<!-- Slider 2 -->
+<div class="space-y-sm">
+<div class="flex justify-between items-center">
+<label class="font-label-md text-label-md text-on-surface uppercase tracking-wider">Medium Risk Ceiling</label>
+<span class="font-mono-data text-mono-data text-tertiary-container font-semibold">45%</span>
+</div>
+<input class="w-full appearance-none bg-transparent" max="100" min="0" type="range" value="45"/>
+<div class="flex justify-between font-label-md text-label-md text-on-surface-variant">
+<span>Low Ceiling + 1</span>
+<span>Balanced</span>
+</div>
+</div>
+<!-- Slider 3 -->
+<div class="space-y-sm">
+<div class="flex justify-between items-center">
+<label class="font-label-md text-label-md text-on-surface uppercase tracking-wider">High Risk Floor</label>
+<span class="font-mono-data text-mono-data text-error font-semibold">46%</span>
+</div>
+<input class="w-full appearance-none bg-transparent" disabled="" max="100" min="0" type="range" value="46"/>
+<div class="flex justify-between font-label-md text-label-md text-outline">
+<span>Auto-calculated (Med + 1)</span>
+</div>
+</div>
+</div>
+<div class="mt-lg pt-md border-t border-outline-variant flex justify-end">
+<button class="bg-primary text-on-primary font-body-md text-body-md px-lg py-sm rounded-lg hover:bg-primary-container transition-colors shadow-sm">Save Thresholds</button>
+</div>
+</section>
+<!-- Section 2: Model Info (Spans 4 cols) -->
+<section class="lg:col-span-4 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-sm flex flex-col justify-between relative overflow-hidden">
+<!-- AI Explainability subtle accent -->
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-surface-variant"></div>
+<div>
+<div class="flex items-center gap-sm mb-md pl-xs">
+<span class="material-symbols-outlined text-primary">memory</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Active Engine</h3>
+</div>
+<div class="bg-surface-container-low rounded-lg p-md mb-md border border-outline-variant">
+<div class="flex justify-between items-center mb-xs">
+<span class="font-label-md text-label-md text-on-surface-variant">VERSION</span>
+<span class="font-mono-data text-mono-data text-on-surface bg-surface-variant px-sm py-xs rounded">v2.4.1-stable</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-label-md text-label-md text-on-surface-variant">STATUS</span>
+<div class="flex items-center gap-xs text-primary">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<span class="font-mono-data text-mono-data">Online</span>
+</div>
+</div>
+</div>
+<ul class="space-y-sm">
+<li class="flex justify-between items-center py-xs border-b border-outline-variant border-dashed">
+<span class="font-body-md text-body-md text-on-surface-variant">Last Trained</span>
+<span class="font-mono-data text-mono-data text-on-surface">Oct 12, 2023</span>
+</li>
+<li class="flex justify-between items-center py-xs border-b border-outline-variant border-dashed">
+<span class="font-body-md text-body-md text-on-surface-variant">Data Cutoff</span>
+<span class="font-mono-data text-mono-data text-on-surface">Sep 01, 2023</span>
+</li>
+<li class="flex justify-between items-center py-xs">
+<span class="font-body-md text-body-md text-on-surface-variant">Features</span>
+<span class="font-mono-data text-mono-data text-on-surface">1,402</span>
+</li>
+</ul>
+</div>
+<button class="w-full mt-md bg-surface text-on-surface-variant border border-outline-variant font-body-md text-body-md px-md py-sm rounded-lg hover:bg-surface-container transition-colors flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined text-[18px]">update</span>
+                            Check for Model Updates
+                        </button>
+</section>
+<!-- Section 3: Notification Toggles (Spans 6 cols) -->
+<section class="lg:col-span-6 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-sm">
+<div class="flex items-center gap-sm mb-md border-l-4 border-surface-variant pl-sm">
+<span class="material-symbols-outlined text-primary">notifications_active</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Alert Preferences</h3>
+</div>
+<div class="space-y-md">
+<!-- Toggle 1 -->
+<div class="flex items-center justify-between p-sm rounded-lg hover:bg-surface-container-low transition-colors">
+<div>
+<h4 class="font-body-lg text-body-lg text-on-surface font-medium">High Risk Asset Detection</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Immediate alert when portfolio asset crosses high-risk floor.</p>
+</div>
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-outline-variant transition-transform duration-200 ease-in-out z-10 top-[2px] left-[2px] checked:translate-x-4 checked:border-primary" id="toggle_1" name="toggle_1" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-surface-variant cursor-pointer transition-colors duration-200 ease-in-out peer-checked:bg-primary" for="toggle_1"></label>
+</div>
+</div>
+<!-- Toggle 2 -->
+<div class="flex items-center justify-between p-sm rounded-lg hover:bg-surface-container-low transition-colors">
+<div>
+<h4 class="font-body-lg text-body-lg text-on-surface font-medium">Revenue Exposure Warnings</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Daily digest of top 5 assets impacting potential revenue.</p>
+</div>
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-outline-variant transition-transform duration-200 ease-in-out z-10 top-[2px] left-[2px] checked:translate-x-4 checked:border-primary" id="toggle_2" name="toggle_2" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-surface-variant cursor-pointer transition-colors duration-200 ease-in-out peer-checked:bg-primary" for="toggle_2"></label>
+</div>
+</div>
+<!-- Toggle 3 -->
+<div class="flex items-center justify-between p-sm rounded-lg hover:bg-surface-container-low transition-colors">
+<div>
+<h4 class="font-body-lg text-body-lg text-on-surface font-medium">Model Drift Anomalies</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Alerts when active engine deviates from historical baseline.</p>
+</div>
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-outline-variant transition-transform duration-200 ease-in-out z-10 top-[2px] left-[2px] checked:translate-x-4 checked:border-primary" id="toggle_3" name="toggle_3" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-surface-variant cursor-pointer transition-colors duration-200 ease-in-out peer-checked:bg-primary" for="toggle_3"></label>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 4: User Profile/Logout (Spans 6 cols) -->
+<section class="lg:col-span-6 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-sm mb-md border-l-4 border-surface-variant pl-sm">
+<span class="material-symbols-outlined text-primary">account_circle</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Account &amp; Security</h3>
+</div>
+<div class="flex items-center gap-md mb-lg">
+<img class="w-16 h-16 rounded-full object-cover border-2 border-surface-variant" data-alt="A professional corporate headshot of a financial analyst, soft bright lighting, sharp focus, modern office background slightly blurred, high utility aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLdrAWK97hBr6FxW5emd7ou2KemegFoWESz59w7FCU4rBq_Y9_VY9Q6jeX74xwPnprI11c4-MzpELN23KxsX1I-mTZYzWJ4FZXqDWIDX1J1b9CFadNtyvsgwVeq7g84kZLWFwHGNJhIt1GnLCYbasPMuYwUNSziNiZFS7d_sPiKpenXdGvkxeTAP6MHa1xEZYZqkUl_V3yeDQGBapOLH7Mu7OM1-5eTafnVSkD-Yn2oZHb83qujTRyyg"/>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Jane Doe</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">jane.doe@fintechcorp.com</p>
+<span class="inline-block mt-xs bg-surface-variant text-on-surface-variant font-label-md text-label-md px-2 py-1 rounded">Senior Risk Analyst</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row gap-md">
+<button class="flex-1 bg-surface text-on-surface-variant border border-outline-variant font-body-md text-body-md px-md py-sm rounded-lg hover:bg-surface-container transition-colors flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined text-[18px]">password</span>
+                                Change Password
+                            </button>
+<button class="flex-1 bg-error-container text-error font-body-md text-body-md px-md py-sm rounded-lg hover:bg-red-200 transition-colors flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined text-[18px]">logout</span>
+                                End Session
+                            </button>
+</div>
+</section>
+</div>
+</div>
+</main>
+</div>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center bg-surface dark:bg-surface-dim py-2 px-margin-mobile md:hidden border-t border-outline-variant">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-transform duration-150 scale-95" href="#">
+<span class="material-symbols-outlined text-[24px]">dashboard</span>
+<span class="font-label-md text-label-md mt-1">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-transform duration-150 scale-95" href="#">
+<span class="material-symbols-outlined text-[24px]">receipt_long</span>
+<span class="font-label-md text-label-md mt-1">Orders</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-transform duration-150 scale-95" href="#">
+<span class="material-symbols-outlined text-[24px]">analytics</span>
+<span class="font-label-md text-label-md mt-1">Analysis</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-xl px-4 py-1 transition-transform duration-150 scale-95" href="#">
+<span class="material-symbols-outlined text-[24px] fill-icon">settings</span>
+<span class="font-label-md text-label-md mt-1">Settings</span>
+</a>
+</nav>
+<!-- Custom Checkbox Toggle Script -->
+<script>
+        // Simple script to handle custom toggle styling logic if needed beyond CSS peer classes
+        document.querySelectorAll('.toggle-checkbox').forEach(toggle => {
+            toggle.addEventListener('change', function() {
+                // Additional logic could go here
+            });
+        });
+    </script>
+</body></html>

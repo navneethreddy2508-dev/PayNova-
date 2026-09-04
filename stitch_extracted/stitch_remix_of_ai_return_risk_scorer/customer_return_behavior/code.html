@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Customer Analytics - Return Behavior</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error": "#ffffff",
+                        "on-tertiary-container": "#ffede6",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "surface-container-highest": "#e1e2ed",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "primary-fixed": "#dbe1ff",
+                        "on-surface-variant": "#434655",
+                        "on-error-container": "#93000a",
+                        "inverse-on-surface": "#f0f0fb",
+                        "surface": "#faf8ff",
+                        "tertiary-container": "#bc4800",
+                        "on-primary-container": "#eeefff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#e7e7f3",
+                        "secondary-fixed": "#d3e4fe",
+                        "inverse-primary": "#b4c5ff",
+                        "surface-container": "#ededf9",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "on-tertiary-fixed": "#360f00",
+                        "surface-container-low": "#f3f3fe",
+                        "error": "#ba1a1a",
+                        "outline": "#737686",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "surface-variant": "#e1e2ed",
+                        "on-surface": "#191b23",
+                        "tertiary-fixed": "#ffdbcd",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "inverse-surface": "#2e3039",
+                        "on-primary-fixed": "#00174b",
+                        "outline-variant": "#c3c6d7",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "surface-bright": "#faf8ff",
+                        "on-secondary-container": "#54647a",
+                        "surface-tint": "#0053db",
+                        "primary": "#004ac6",
+                        "on-secondary-fixed": "#0b1c30",
+                        "primary-container": "#2563eb",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "on-background": "#191b23",
+                        "tertiary": "#943700",
+                        "surface-dim": "#d9d9e5",
+                        "background": "#faf8ff",
+                        "secondary-container": "#d0e1fb",
+                        "secondary": "#505f76"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1440px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "margin-mobile": "16px",
+                        "sm": "8px",
+                        "xl": "32px",
+                        "base": "4px",
+                        "gutter": "24px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "mono-data": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "mono-data": ["13px", {"lineHeight": "18px", "fontWeight": "500"}],
+                        "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+            -webkit-font-smoothing: antialiased;
+        }
+        .ai-accent-border {
+            border-left: 4px solid theme('colors.surface-container-high');
+        }
+        .sparkline {
+            stroke: theme('colors.primary');
+            stroke-width: 2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="pb-24">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky bg-surface border-b border-outline-variant flat no shadows z-40 transition-colors duration-200">
+<div class="flex items-center justify-between px-md py-sm max-w-container-max mx-auto">
+<div class="flex items-center gap-sm">
+<img class="w-8 h-8 rounded-full object-cover" data-alt="A clean, minimalist corporate headshot of a user profile. The background is a stark, bright white setting highlighting a professional appearance. The lighting is high-key and uniform, reflecting a modern, institutional corporate style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCslXOwEcxpHli6W2eiAqyesUqQoRWWVW5z-wR3MzGw4JPrZ5EyqAQOtPZBiYI6hvzuN3ijJOqShik48-T27z_1EflLx7KpNzdxzZjgUl30KTu1-YnOQYRXCfO6rAAuHI4ri3y5W1jyxgZlvTQdGqCCzOX_jc49MrPYqf2uxJ_EkOlVzGyciHFMyEWPaSnwI6K3LcLwVabBwbh7AaxdmUHeajV54qtrVERGGZ3JRhFUgmzutrhI_vGzaA"/>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary">AI Return-Risk Scorer</h1>
+</div>
+<button aria-label="Notifications" class="p-2 rounded-full hover:bg-surface-container-low text-primary transition-colors duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="max-w-container-max mx-auto px-margin-mobile md:px-gutter py-lg">
+<div class="mb-lg">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-sm">Customer Analysis</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">Review detailed return behaviors and risk scoring to optimize policy application. AI-driven insights highlight unusual return affinities.</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- List Section -->
+<div class="lg:col-span-5 xl:col-span-4 flex flex-col gap-sm">
+<!-- Customer Card (Selected) -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-md cursor-pointer hover:bg-surface-container-low transition-colors duration-200 shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.05)] ring-1 ring-primary">
+<div class="flex justify-between items-start mb-sm">
+<div>
+<span class="font-mono-data text-mono-data text-on-surface">CUST-8492-AX</span>
+<div class="font-body-md text-body-md text-on-surface-variant mt-xs">Active since 2021</div>
+</div>
+<div class="bg-error-container text-on-error-container px-2 py-1 rounded-full flex items-center gap-xs">
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<span class="font-label-md text-label-md">High Risk</span>
+</div>
+</div>
+<div class="flex gap-lg border-t border-surface-container mt-sm pt-sm">
+<div>
+<div class="font-label-md text-label-md text-on-surface-variant uppercase">Total Orders</div>
+<div class="font-headline-sm text-headline-sm text-on-surface">142</div>
+</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface-variant uppercase">Return Rate</div>
+<div class="font-headline-sm text-headline-sm text-error">68.4%</div>
+</div>
+</div>
+</div>
+<!-- Customer Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-md cursor-pointer hover:bg-surface-container-low transition-colors duration-200">
+<div class="flex justify-between items-start mb-sm">
+<div>
+<span class="font-mono-data text-mono-data text-on-surface">CUST-3310-BN</span>
+<div class="font-body-md text-body-md text-on-surface-variant mt-xs">Active since 2022</div>
+</div>
+<div class="bg-surface-container-high text-on-surface px-2 py-1 rounded-full flex items-center gap-xs">
+<div class="w-2 h-2 rounded-full bg-outline"></div>
+<span class="font-label-md text-label-md">Normal</span>
+</div>
+</div>
+<div class="flex gap-lg border-t border-surface-container mt-sm pt-sm">
+<div>
+<div class="font-label-md text-label-md text-on-surface-variant uppercase">Total Orders</div>
+<div class="font-headline-sm text-headline-sm text-on-surface">89</div>
+</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface-variant uppercase">Return Rate</div>
+<div class="font-headline-sm text-headline-sm text-on-surface">12.1%</div>
+</div>
+</div>
+</div>
+<!-- Customer Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-md cursor-pointer hover:bg-surface-container-low transition-colors duration-200">
+<div class="flex justify-between items-start mb-sm">
+<div>
+<span class="font-mono-data text-mono-data text-on-surface">CUST-9921-CV</span>
+<div class="font-body-md text-body-md text-on-surface-variant mt-xs">Active since 2020</div>
+</div>
+<div class="bg-tertiary-fixed text-on-tertiary-fixed px-2 py-1 rounded-full flex items-center gap-xs">
+<div class="w-2 h-2 rounded-full bg-tertiary"></div>
+<span class="font-label-md text-label-md">Elevated</span>
+</div>
+</div>
+<div class="flex gap-lg border-t border-surface-container mt-sm pt-sm">
+<div>
+<div class="font-label-md text-label-md text-on-surface-variant uppercase">Total Orders</div>
+<div class="font-headline-sm text-headline-sm text-on-surface">215</div>
+</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface-variant uppercase">Return Rate</div>
+<div class="font-headline-sm text-headline-sm text-tertiary">34.5%</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Detail Section -->
+<div class="lg:col-span-7 xl:col-span-8 flex flex-col gap-md">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-lg ai-accent-border">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-md flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 0;">psychiatry</span>
+                        AI Return Behavior Analysis: CUST-8492-AX
+                    </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md mb-lg">
+<div class="p-md bg-surface border border-outline-variant rounded-md">
+<div class="font-label-md text-label-md text-on-surface-variant uppercase mb-xs">Primary Issue</div>
+<div class="font-body-md text-body-md text-on-surface">Consistent return of high-value electronics with generic "defective" reasoning post-weekend.</div>
+</div>
+<div class="p-md bg-surface border border-outline-variant rounded-md">
+<div class="font-label-md text-label-md text-on-surface-variant uppercase mb-xs">Recommended Action</div>
+<div class="font-body-md text-body-md text-on-surface">Implement manual review for returns exceeding $500. Restrict immediate refund issuance.</div>
+</div>
+</div>
+<div class="mb-lg">
+<div class="flex justify-between items-end mb-sm">
+<h4 class="font-body-lg text-body-lg font-semibold text-on-surface">6-Month Return Trend</h4>
+<span class="font-mono-data text-mono-data text-error">+42% velocity</span>
+</div>
+<div class="w-full h-24 border-b border-l border-outline-variant relative">
+<!-- Simulated Chart -->
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 100 30">
+<path class="sparkline" d="M0,25 L10,22 L20,24 L30,15 L40,18 L50,10 L60,12 L70,5 L80,8 L90,2 L100,5"></path>
+<circle cx="100" cy="5" fill="theme('colors.error')" r="1.5"></circle>
+</svg>
+</div>
+<div class="flex justify-between mt-xs font-label-md text-label-md text-on-surface-variant">
+<span>Jul</span>
+<span>Aug</span>
+<span>Sep</span>
+<span>Oct</span>
+<span>Nov</span>
+<span>Dec</span>
+</div>
+</div>
+<div>
+<h4 class="font-body-lg text-body-lg font-semibold text-on-surface mb-sm">Category Affinity</h4>
+<div class="space-y-sm">
+<div>
+<div class="flex justify-between font-body-md text-body-md text-on-surface mb-xs">
+<span>Electronics</span>
+<span class="font-mono-data">82%</span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-error h-full" style="width: 82%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-body-md text-body-md text-on-surface mb-xs">
+<span>Apparel</span>
+<span class="font-mono-data">14%</span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full" style="width: 14%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-body-md text-body-md text-on-surface mb-xs">
+<span>Home Goods</span>
+<span class="font-mono-data">4%</span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-outline h-full" style="width: 4%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center bg-surface py-2 px-margin-mobile border-t border-outline-variant flat no shadows">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high scale-95 transition-transform duration-150 rounded-xl" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high scale-95 transition-transform duration-150 rounded-xl" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 0;">receipt_long</span>
+<span class="font-label-md text-label-md">Orders</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl px-4 py-1 scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="font-label-md text-label-md">Analysis</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high scale-95 transition-transform duration-150 rounded-xl" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 0;">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</nav>
+</body></html>
