@@ -35,7 +35,7 @@ class AppStateStore {
       name: "Navneeth",
       email: "navneeth@paynova.ai",
       role: "Senior Risk Analyst",
-      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80"
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80"
     };
     
     // Check previous session auth (defaults to false for new users)
