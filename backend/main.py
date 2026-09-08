@@ -25,7 +25,7 @@ from backend.config import (
 )
 from backend.database import engine, Base, SessionLocal
 from backend.models import Customer, Order, ReturnSettings, ModelVersion
-from backend.routes import api_router
+from backend.routes import api_router, root_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -33,21 +33,24 @@ async def lifespan(app: FastAPI):
     Application startup and shutdown lifespan context.
     Ensures database tables exist and seeds demo data on initial startup.
     """
-    # 1. Ensure tables exist
-    Base.metadata.create_all(bind=engine)
-    
-    # 2. Check if DB is empty; if so, seed automatically
-    db = SessionLocal()
     try:
-        order_count = db.query(Order).count()
-        if order_count == 0:
-            print("[INFO] Empty database detected. Running initial seed...")
-            from backend.seed import seed_database
-            seed_database()
-        else:
-            print(f"[INFO] Connected to existing SQLite database ({order_count} orders present).")
-    finally:
-        db.close()
+        # 1. Ensure tables exist
+        Base.metadata.create_all(bind=engine)
+        
+        # 2. Check if DB is empty; if so, seed automatically
+        db = SessionLocal()
+        try:
+            order_count = db.query(Order).count()
+            if order_count == 0:
+                print("[INFO] Empty database detected. Running initial seed...")
+                from backend.seed import seed_database
+                seed_database()
+            else:
+                print(f"[INFO] Connected to existing SQLite database ({order_count} orders present).")
+        finally:
+            db.close()
+    except Exception as e:
+        print(f"[WARN] Database initialization notice during startup: {e}")
         
     yield
     print("[INFO] AI Return-Risk Scorer API shutdown.")
@@ -101,8 +104,9 @@ async def global_exception_handler(request: Request, exc: Exception):
         }
     )
 
-# Include API Router
+# Include API Routers (Mounts both /api/* and /* to handle Vercel proxying & local dev smoothly)
 app.include_router(api_router)
+app.include_router(root_router)
 
 @app.get("/", tags=["Health"])
 def root():

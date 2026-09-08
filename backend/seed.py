@@ -26,9 +26,10 @@ from backend.models import (
 )
 from backend.services.prediction_service import predict_return_risk_for_order
 
-def seed_database():
+def seed_database(drop_existing: bool = True):
     print("--- 1. Creating Database Schema ---")
-    Base.metadata.drop_all(bind=engine)
+    if drop_existing:
+        Base.metadata.drop_all(bind=engine)
     Base.metadata.create_all(bind=engine)
     
     db = SessionLocal()

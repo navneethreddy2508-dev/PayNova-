@@ -11,7 +11,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import or_, desc, func
 from fastapi import HTTPException, UploadFile
 
-from backend.config import PROJECT_ROOT
+from backend.config import PROJECT_ROOT, EVIDENCE_UPLOAD_DIR
 from backend.models.order import Order
 from backend.models.customer import Customer
 from backend.models.product import Product
@@ -20,9 +20,6 @@ from backend.models.intervention import ReturnIntervention
 from backend.schemas.order import OrderCreate, OrderListItem, OrderListResponse, OrderDetailResponse
 from backend.services.prediction_service import predict_return_risk_for_order
 from backend.services.audit_service import log_audit_event
-
-EVIDENCE_UPLOAD_DIR = PROJECT_ROOT / "backend" / "data" / "evidence_uploads"
-EVIDENCE_UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
 # In-memory registry for uploaded evidence linked to orders
 ORDER_EVIDENCE_STORE: Dict[str, List[Dict[str, Any]]] = {}
