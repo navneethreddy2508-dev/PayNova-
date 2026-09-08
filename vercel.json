@@ -1,7 +1,7 @@
 {
   "functions": {
     "api/index.py": {
-      "includeFiles": "ml/**,backend/data/**"
+      "includeFiles": "backend/**,ml/**,backend/data/**"
     }
   },
   "rewrites": [

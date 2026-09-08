@@ -42,8 +42,19 @@ async function fetchJSON(endpoint, options = {}) {
     });
 
     if (!response.ok) {
-      const errorBody = await response.json().catch(() => ({}));
-      throw new Error(errorBody.detail || `HTTP error ${response.status}: ${response.statusText}`);
+      let errorMsg = '';
+      try {
+        const errorBody = await response.json();
+        errorMsg = errorBody.detail || errorBody.message || (typeof errorBody === 'string' ? errorBody : JSON.stringify(errorBody));
+      } catch (e) {
+        try {
+          errorMsg = await response.text();
+        } catch (t) {}
+      }
+      if (!errorMsg || errorMsg === '{}') {
+        errorMsg = `HTTP error ${response.status} (${response.statusText || 'Server Error'})`;
+      }
+      throw new Error(errorMsg);
     }
 
     return await response.json();
