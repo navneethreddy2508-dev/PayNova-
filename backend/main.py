@@ -94,7 +94,6 @@ app.add_middleware(
 async def global_exception_handler(request: Request, exc: Exception):
     import traceback
     print(f"\n[ERROR] Unhandled Exception at {request.method} {request.url.path}: {exc}")
-    traceback.print_exc()
     return JSONResponse(
         status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
         content={
@@ -104,12 +103,23 @@ async def global_exception_handler(request: Request, exc: Exception):
         }
     )
 
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
+
 # Include API Routers (Mounts both /api/* and /* to handle Vercel proxying & local dev smoothly)
 app.include_router(api_router)
 app.include_router(root_router)
 
-@app.get("/", tags=["Health"])
+# Mount static frontend assets for single-service deployments (e.g. Render)
+src_dir = os.path.join(PROJECT_ROOT, "src")
+if os.path.exists(src_dir):
+    app.mount("/src", StaticFiles(directory=src_dir), name="src")
+
+@app.get("/", tags=["Frontend"])
 def root():
+    index_file = os.path.join(PROJECT_ROOT, "index.html")
+    if os.path.exists(index_file):
+        return FileResponse(index_file)
     return {
         "status": "online",
         "service": PROJECT_NAME,
